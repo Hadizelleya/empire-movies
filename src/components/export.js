@@ -3,3 +3,4 @@ export { default as MovieInformation } from "./movie Information/movieInformatio
 export { default as Navbar } from "./navbar/Navbar";
 export { default as Actors } from "./actors/actors";
 export { default as Profile } from "./profile/Profile";
+export { default as Sidebar } from "./sidebar/Sidebar";
