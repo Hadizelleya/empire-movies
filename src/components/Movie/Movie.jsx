@@ -22,8 +22,8 @@ export default function Movie({ movie, index }) {
             className={classes.image}
             src={
               movie.poster_path
-                ? `http://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                : "http://www.fillmurray.com/200/300"
+                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                : "https://picsum.photos/200/300"
             }
             alt={movie.title}
           />
