@@ -1,5 +1,5 @@
 // filepath: /C:/Users/hadi_/Desktop/jsmastery course/Filmpire movies/src/components/movies/Movies.jsx
-import React from "react";
+import React, { useState } from "react";
 import { useGetMoviesQuery } from "../../services/TMBD";
 import { MovieList } from "../export";
 import {
@@ -8,10 +8,18 @@ import {
   useMediaQuery,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export default function Movies() {
-  const { data, isFetching, error } = useGetMoviesQuery();
-  console.log(data);
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+  const [page, setPage] = useState(1);
+  const { data, isFetching, error } = useGetMoviesQuery({
+    genreIdOrCategoryName,
+    page,
+  });
+
   return (
     <div>
       {isFetching ? (

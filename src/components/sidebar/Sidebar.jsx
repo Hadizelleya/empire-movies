@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useGetGenresQuery } from "../../services/TMBD";
 import genreIcons from "../../assets/genres";
+import { useDispatch } from "react-redux";
+import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 const categories = [
   { label: "Popular", value: "popular" },
@@ -31,6 +33,7 @@ export default function Sidebar({ setMobileOpen }) {
     "https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png";
   const theme = useTheme();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -46,7 +49,11 @@ export default function Sidebar({ setMobileOpen }) {
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link to={"/"} key={value} className={classes.links}>
-            <ListItemButton onClick={() => {}}>
+            <ListItemButton
+              onClick={() => {
+                dispatch(selectGenreOrCategory(value));
+              }}
+            >
               <ListItemIcon>
                 <img
                   src={genreIcons[label.toLowerCase()]}
@@ -70,7 +77,11 @@ export default function Sidebar({ setMobileOpen }) {
         ) : (
           data.genres.map(({ name, id }) => (
             <Link to={"/"} key={id} className={classes.links}>
-              <ListItemButton onClick={() => {}}>
+              <ListItemButton
+                onClick={() => {
+                  dispatch(selectGenreOrCategory(id));
+                }}
+              >
                 <ListItemIcon>
                   <img
                     src={genreIcons[name.toLowerCase()]}

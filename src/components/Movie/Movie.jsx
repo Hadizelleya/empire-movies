@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid2";
 import { Link } from "react-router-dom";
 export default function Movie({ movie, index }) {
   const classes = useStyles();
-  console.log(movie);
+
   return (
     <Grid
       item="true"
