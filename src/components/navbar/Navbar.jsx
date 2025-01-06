@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import useStyles from "./styles";
-import { Sidebar } from "../export";
+import { Search, Sidebar } from "../export";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function Navbar() {
           <IconButton color="inherit" sx={{ ml: "1" }} onClick={() => {}}>
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && "seach..."}
+          {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
               <Button color="inherit" onClick={() => {}}>
@@ -68,7 +68,7 @@ export default function Navbar() {
               </Button>
             )}
           </div>
-          {isMobile && "search..."}
+          {isMobile && <Search />}
         </Toolbar>
         <div>
           <nav className={classes.drawer}>

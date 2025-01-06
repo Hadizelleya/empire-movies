@@ -11,13 +11,14 @@ import {
 import { useSelector } from "react-redux";
 
 export default function Movies() {
-  const { genreIdOrCategoryName } = useSelector(
+  const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
   );
   const [page, setPage] = useState(1);
   const { data, isFetching, error } = useGetMoviesQuery({
     genreIdOrCategoryName,
     page,
+    searchQuery,
   });
 
   return (
