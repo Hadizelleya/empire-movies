@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   IconButton,
@@ -18,13 +18,40 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import useStyles from "./styles";
 import { Search, Sidebar } from "../export";
+import { createSessionId, fetchToken, moviesApi } from "../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, userSelector } from "../../features/auth";
 
 export default function Navbar() {
+  const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const classes = useStyles();
-  const isAuthenticated = true;
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("request_token");
+  const localStorageSessionId = localStorage.getItem("session_id");
+
+  useEffect(() => {
+    const logInUser = async () => {
+      if (token) {
+        if (localStorageSessionId) {
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${localStorageSessionId}`
+          );
+          dispatch(setUser(userData));
+        } else {
+          const sessionId = await createSessionId();
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionId}`
+          );
+
+          dispatch(setUser(userData));
+        }
+      }
+    };
+    logInUser();
+  }, [token]);
   return (
     <>
       <AppBar position="fixed">
@@ -48,7 +75,7 @@ export default function Navbar() {
           {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
-              <Button color="inherit" onClick={() => {}}>
+              <Button color="inherit" onClick={fetchToken}>
                 Login &nbsp; <AccountCircle />
               </Button>
             ) : (
@@ -56,14 +83,14 @@ export default function Navbar() {
                 color="inherit"
                 onClick={() => {}}
                 LinkComponent={Link}
-                to={"/profile/:id"}
+                to={`/profile/${user.id}`}
                 className={classes.linkButton}
               >
-                {!isMobile && <>My Movies &nbsp;</>}
+                {!isMobile && <h5>{user.name} &nbsp;</h5>}
                 <Avatar
                   style={{ width: 30, height: 30 }}
                   alt="Profile"
-                  src="https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-1713936211478.webp"
+                  src={`https://media.themoviedb.org/t/p/w150_and_h150_face${user.avatar.tmdb.avatar_path}`}
                 />
               </Button>
             )}
