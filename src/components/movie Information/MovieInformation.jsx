@@ -255,8 +255,8 @@ export default function MovieInformation() {
         {data?.videos?.results?.length > 0 && (
           <iframe
             src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
-            frameborder="0"
-            autoplay
+            frameBorder="0"
+            autoPlay
             className={classes.video}
             title="Trailer"
             allow="autoplay"

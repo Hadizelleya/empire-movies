@@ -20,12 +20,11 @@ export default makeStyles((theme) => ({
     width: "70%",
     [theme.breakpoints.down("md")]: {
       margin: "0 auto",
-      width: "60%",
+      width: "300px",
     },
     [theme.breakpoints.down("sm")]: {
       margin: "0 auto",
       width: "100%",
-      height: "400px",
       marginBottom: "30px",
     },
   },

@@ -26,7 +26,7 @@ export default function Navbar() {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const classes = useStyles();
   const dispatch = useDispatch();
   const token = localStorage.getItem("request_token");
@@ -54,7 +54,7 @@ export default function Navbar() {
   }, [token]);
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar>
         <Toolbar className={classes.toolbar}>
           {isMobile && (
             <IconButton

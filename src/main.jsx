@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import App from "./App.jsx";
 import { Provider } from "react-redux";
 import { store } from "./app/Store.js";
+import "./index.css";
 const theme = createTheme({});
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>

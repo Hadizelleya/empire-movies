@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     height: "70px",
   },
   sidebar: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       width: "240px",
       flexShrink: 0,
     },
