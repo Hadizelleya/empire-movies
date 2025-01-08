@@ -12,6 +12,7 @@ import {
   CircularProgress,
   useMediaQuery,
   Rating,
+  Drawer,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {
@@ -246,23 +247,33 @@ export default function MovieInformation() {
           <Box>Sorry, Nothing was found</Box>
         )}
       </Box>
-      <Modal
-        closeAfterTransition
-        className={classes.modal}
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        {data?.videos?.results?.length > 0 && (
+      {data.videos.results.length > 0 ? (
+        <Modal
+          closeAfterTransition
+          className={classes.modal}
+          open={open}
+          onClose={() => setOpen(false)}
+        >
           <iframe
-            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
-            frameBorder="0"
+            src={`https://www.youtube.com/embed/${data?.videos?.results[0]?.key}`}
             autoPlay
             className={classes.video}
             title="Trailer"
             allow="autoplay"
           />
-        )}
-      </Modal>
+        </Modal>
+      ) : (
+        <Modal
+          closeAfterTransition
+          className={classes.modal}
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <div className={classes.modalError}>
+            <Typography variant="h5">This Movie Has No trailer</Typography>
+          </div>
+        </Modal>
+      )}
     </Grid>
   );
 }

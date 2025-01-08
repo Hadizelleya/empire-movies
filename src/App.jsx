@@ -10,6 +10,7 @@ import {
 import useStyles from "./styles";
 function App() {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -19,7 +20,8 @@ function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Routes>
-          <Route path={["/", "/approved"]} element={<Movies />} />
+          <Route path="/" element={<Movies />} />
+          <Route path="/approved" element={<Movies />} />
           <Route path="/movies/:id" element={<MovieInformation />} />
           <Route path="/actors/:id" element={<Actors />} />
           <Route path="/profile/:id" element={<Profile />} />

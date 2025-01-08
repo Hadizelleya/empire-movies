@@ -1,6 +1,6 @@
 import { Padding } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
-import { height, width } from "@mui/system";
+import { border, borderRadius, display, height, width } from "@mui/system";
 
 export default makeStyles((theme) => ({
   containerSpaceAround: {
@@ -78,9 +78,18 @@ export default makeStyles((theme) => ({
   video: {
     width: "50%",
     height: "50%",
+    border: "0",
     [theme.breakpoints.down("sm")]: {
       width: "80%",
       height: "80%",
     },
+  },
+  modalError: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderRadius: "20px",
+    padding: "20px",
   },
 }));
