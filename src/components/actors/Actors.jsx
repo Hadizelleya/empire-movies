@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -6,13 +6,13 @@ import { ArrowBack } from "@mui/icons-material";
 import useStyles from "./styles";
 import { useGetActorDetailsQuery } from "../../services/TMBD";
 import { useGetMoviesByActorIdQuery } from "../../services/TMBD";
-import { MovieList } from "../export";
+import { MovieList, Pagination } from "../export";
 
 export default function Actors() {
   const classes = useStyles();
   const { id } = useParams();
   const { data, isFetching, error } = useGetActorDetailsQuery(id);
-  const page = 1;
+  const [page, setPage] = useState(1);
   const {
     data: actorMovies,
     isFetching: isActorMoviesFetching,
@@ -103,6 +103,11 @@ export default function Actors() {
           ) : (
             <Box marginTop={"3rem"}>
               <MovieList movies={actorMovies} numberOfMovies={12} />
+              <Pagination
+                currentPage={page}
+                setPage={setPage}
+                totalPages={actorMovies.total_pages}
+              />
             </Box>
           )}
         </Box>

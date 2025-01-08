@@ -8,12 +8,7 @@ export default function Movie({ movie, index }) {
 
   return (
     <Grid
-      item="true"
-      xs={12}
-      sm={6}
-      md={4}
-      lg={3}
-      xl={2}
+      size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
       className={classes.movie}
     >
       <Grow in key={index} timeout={(index + 1) * 250}>

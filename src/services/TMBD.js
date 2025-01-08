@@ -30,7 +30,7 @@ export const tmdbApi = createApi({
           return `discover/movie?with_genres=${genreIdOrCategoryName}&page=${page}&api_key=${apiKey}`;
         }
 
-        return `movie/popular?api_key=${apiKey}`;
+        return `movie/popular?page=${page}&api_key=${apiKey}`;
       },
     }),
 
