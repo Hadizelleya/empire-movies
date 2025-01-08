@@ -1,5 +1,6 @@
 import { Padding } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
+import { height, width } from "@mui/system";
 
 export default makeStyles((theme) => ({
   containerSpaceAround: {
@@ -54,6 +55,11 @@ export default makeStyles((theme) => ({
     height: "9em",
     borderRadius: "10px",
     objectFit: "cover",
+    transition: "scale 0.3s ease",
+    boxShadow: " .4em 0em .6em rgb(64,64,70)",
+    ["&:hover"]: {
+      scale: "1.1",
+    },
   },
   buttonsContainer: {
     display: "flex",
@@ -62,6 +68,20 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
       gap: "10px",
+    },
+  },
+
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  video: {
+    width: "50%",
+    height: "50%",
+    [theme.breakpoints.down("sm")]: {
+      width: "80%",
+      height: "80%",
     },
   },
 }));

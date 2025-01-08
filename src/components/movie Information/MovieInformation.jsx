@@ -1,5 +1,8 @@
-import React from "react";
-import { useGetMovieQuery } from "../../services/TMBD";
+import React, { useState } from "react";
+import {
+  useGetMovieQuery,
+  useGetRecommendationsQuery,
+} from "../../services/TMBD";
 import {
   Modal,
   Typography,
@@ -21,7 +24,8 @@ import {
   Remove,
   ArrowBack,
 } from "@mui/icons-material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { MovieList } from "../export";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 import axios from "axios";
@@ -31,13 +35,19 @@ import genreIcons from "../../assets/genres";
 export default function MovieInformation() {
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery(id);
+  const { data: recommendations, isFetching: isRecommendationsFetching } =
+    useGetRecommendationsQuery(id);
+  const [open, setOpen] = useState(false);
+  console.log(recommendations);
   const classes = useStyles();
   const dispatch = useDispatch();
   const isMovieFavorited = false;
   const isMovieWatchlisted = false;
+  const navigate = useNavigate();
   console.log(data);
   const addToFavorites = () => {};
   const addToWatchlist = () => {};
+
   if (isFetching) {
     return (
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -52,6 +62,7 @@ export default function MovieInformation() {
       </Box>
     );
   }
+
   return (
     <Grid container gap={"40px"} className={classes.containerSpaceAround}>
       <Grid
@@ -178,7 +189,11 @@ export default function MovieInformation() {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => {}} href={`#`} endIcon={<Theaters />}>
+                <Button
+                  onClick={() => setOpen(true)}
+                  href={`#`}
+                  endIcon={<Theaters />}
+                >
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -201,6 +216,7 @@ export default function MovieInformation() {
                   watchlist
                 </Button>
                 <Button
+                  onClick={() => navigate(-1)}
                   endIcon={<ArrowBack />}
                   sx={{ borderColor: "primary.main" }}
                 >
@@ -218,6 +234,35 @@ export default function MovieInformation() {
           </div>
         </Grid>
       </Grid>
+      <Box marginTop={"5rem"} width={"100%"}>
+        <Typography variant="h3" gutterBottom align="center">
+          You Might Also Like
+        </Typography>
+        {isRecommendationsFetching ? (
+          <CircularProgress size={"4rem"} />
+        ) : recommendations ? (
+          <MovieList movies={recommendations} numberOfMovies={12} />
+        ) : (
+          <Box>Sorry, Nothing was found</Box>
+        )}
+      </Box>
+      <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {data?.videos?.results?.length > 0 && (
+          <iframe
+            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            frameborder="0"
+            autoplay
+            className={classes.video}
+            title="Trailer"
+            allow="autoplay"
+          />
+        )}
+      </Modal>
     </Grid>
   );
 }
