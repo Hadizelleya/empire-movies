@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import {
   Divider,
   List,
-  ListItem,
   ListItemText,
   ListSubheader,
   Box,
@@ -34,6 +33,10 @@ export default function Sidebar({ setMobileOpen }) {
   const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [selectGenreOrCategory]);
 
   return (
     <>

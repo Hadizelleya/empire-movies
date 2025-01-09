@@ -8,8 +8,13 @@ import {
   Actors,
 } from "./components/export.js";
 import useStyles from "./styles";
+import useAlan from "./components/Alan.jsx";
+import { useRef } from "react";
+
 function App() {
   const classes = useStyles();
+  useAlan();
+  const alanBtnContainer = useRef();
 
   return (
     <div className={classes.root}>
@@ -27,6 +32,7 @@ function App() {
           <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </main>
+      <div ref={alanBtnContainer} />
     </div>
   );
 }

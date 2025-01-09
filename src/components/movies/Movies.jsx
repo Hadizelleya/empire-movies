@@ -1,7 +1,7 @@
 // filepath: /C:/Users/hadi_/Desktop/jsmastery course/Filmpire movies/src/components/movies/Movies.jsx
 import React, { useState } from "react";
 import { useGetMoviesQuery } from "../../services/TMBD";
-import { MovieList, Pagination } from "../export";
+import { FeaturedMovie, MovieList, Pagination } from "../export";
 import {
   Box,
   CircularProgress,
@@ -16,7 +16,7 @@ export default function Movies() {
   );
   const [page, setPage] = useState(1);
   const lg = useMediaQuery((theme) => theme.breakpoints.only("lg"));
-  const numberOfMovies = lg ? 16 : 18;
+  const numberOfMovies = lg ? 17 : 19;
 
   const { data, isFetching, error } = useGetMoviesQuery({
     genreIdOrCategoryName,
@@ -44,8 +44,10 @@ export default function Movies() {
       ) : (
         <>
           <div>
+            <FeaturedMovie movie={data.results[0]} />
             <MovieList
               movies={data}
+              excludeFirst
               numberOfMovies={numberOfMovies}
               error={error}
             />

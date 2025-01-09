@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../features/auth";
 import { Typography, Button, Box } from "@mui/material";
 import { ExitToApp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import useStyles from "./styles";
+import { useGetListQuery } from "../../services/TMBD";
+import { RatedCards } from "../export";
 
 export default function Profile() {
   const classes = useStyles();
   const { user } = useSelector(userSelector);
   const imageUrl = user?.avatar?.tmdb?.avatar_path;
   const navigate = useNavigate();
-  const favoriteMovies = [];
+  const { data: favoriteMovies, refetch: refetchFavoritedMovies } =
+    useGetListQuery({
+      listName: "favorite/movies",
+      id: user.id,
+      session_id: localStorage.getItem("session_id"),
+      page: 1,
+    });
 
+  const { data: watchlistMovies, refetch: refetchWatchlistedMovies } =
+    useGetListQuery({
+      listName: "watchlist/movies",
+      id: user.id,
+      session_id: localStorage.getItem("session_id"),
+      page: 1,
+    });
+
+  useEffect(() => {
+    refetchFavoritedMovies();
+    refetchWatchlistedMovies();
+  }, []);
+  console.log(favoriteMovies);
+  console.log(watchlistMovies);
   const logout = () => {
     localStorage.clear();
     window.location.href = "/";
@@ -55,12 +77,21 @@ export default function Profile() {
           </Button>
         </Box>
       </Box>
-      {!favoriteMovies.length ? (
+      {!favoriteMovies?.results?.length && !watchlistMovies?.results?.length ? (
         <Typography variant="h5">
           Add Favorite Movies Or Watch Lists To See Them Here!
         </Typography>
       ) : (
-        <Box> here are Your Favorite movies {favoriteMovies}</Box>
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          gap={"50px"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <RatedCards data={favoriteMovies} title={"Favorite Movies"} />
+          <RatedCards data={watchlistMovies} title={"Watchlist Movies"} />
+        </Box>
       )}
     </Box>
   );
