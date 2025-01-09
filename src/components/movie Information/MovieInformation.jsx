@@ -11,9 +11,7 @@ import {
   ButtonGroup,
   Box,
   CircularProgress,
-  useMediaQuery,
   Rating,
-  Drawer,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {

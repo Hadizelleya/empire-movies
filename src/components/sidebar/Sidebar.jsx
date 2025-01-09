@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import { useGetGenresQuery } from "../../services/TMBD";
 import genreIcons from "../../assets/genres";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 const categories = [
@@ -26,6 +26,9 @@ const categories = [
 
 export default function Sidebar({ setMobileOpen }) {
   const { data, error, isFetching } = useGetGenresQuery();
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
   const blueLogo =
     "https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png";
   const redLogo =
@@ -36,7 +39,7 @@ export default function Sidebar({ setMobileOpen }) {
 
   useEffect(() => {
     setMobileOpen(false);
-  }, [selectGenreOrCategory]);
+  }, [genreIdOrCategoryName]);
 
   return (
     <>
@@ -77,6 +80,8 @@ export default function Sidebar({ setMobileOpen }) {
           <Box display={"flex"} justifyContent={"center"}>
             <CircularProgress size={"2rem"} />
           </Box>
+        ) : error ? (
+          <h1>Something Happened please Try again</h1>
         ) : (
           data.genres.map(({ name, id }) => (
             <Link to={"/"} key={id} className={classes.links}>
