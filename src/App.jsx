@@ -32,7 +32,7 @@ function App() {
           <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </main>
-      <div ref={alanBtnContainer} />
+      <div id="alan-btn" ref={alanBtnContainer} />
     </div>
   );
 }

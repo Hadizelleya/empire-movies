@@ -18,6 +18,7 @@ export default function useAlan() {
     alanBtn({
       key: import.meta.env.VITE_ALAN_KEY,
       host: import.meta.env.VITE_ALAN_HOST,
+      rootEl: document.getElementById("alan-btn"),
       onCommand: ({ command, mode, genreOrCategory, genres, query }) => {
         if (command === "chooseGenre") {
           const foundGenre = genres.find(
